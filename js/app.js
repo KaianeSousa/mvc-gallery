@@ -31,13 +31,12 @@ class GalleryApp {
             this.setupPerformanceOptimizations();
             this.setupErrorHandling();
 
-            console.log( Galeria de Plantas inicializada com sucesso!');
-            console.log('📊 Dados 
- iniciais:', this.controller.getDetailedStats());
+            console.log('Galeria de Planta inicializada com sucesso!');
+            console.log('📊 Estatísticas iniciais:', this.controller.getDetailedStats());
 
         } catch (error) {
             console.error('Erro ao inicializar a aplicação:', error);
-            this.showErrorMessage('Erro ao carregar a Galeria de Plantas. Tente recarregar a página.');
+            this.showErrorMessage('Erro ao carregar a galeria de flora. Tente recarregar a página.');
         }
     }
 
@@ -149,10 +148,10 @@ class GalleryApp {
 
     // Método para testar funcionalidades
     testFunctionality() {
-        console.log('Testando funcionalidades da Galeria de Plantas...');
+        console.log('Testando funcionalidades da galeria de plantas...');
         
         // Testar filtros
-        console.log('Testando filtros...');
+        console.log('🌸 Testando filtros de plantas...');
         this.controller.handleCategoryChange('flores');
         setTimeout(() => {
             this.controller.handleCategoryChange('arvores');
@@ -163,7 +162,7 @@ class GalleryApp {
 
         // Testar busca
         setTimeout(() => {
-            console.log( Testando busca...');
+            console.log('Testando busca por plantas...');
             this.controller.handleSearchChange('rosa');
             setTimeout(() => {
                 this.controller.handleSearchChange('');
@@ -172,7 +171,7 @@ class GalleryApp {
 
         // Testar paginação
         setTimeout(() => {
-            console.log('📄 Testando paginação...');
+            console.log('Testando paginação...');
             this.controller.handleNextPage();
             setTimeout(() => {
                 this.controller.handlePrevPage();
