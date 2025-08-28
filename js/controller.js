@@ -9,33 +9,28 @@ class ImageController {
 
     // Configura os callbacks da visualização
     setupViewCallbacks() {
-        // Callback para cliques no botão de busca
-        this.view.setSearchChangeCallback((searchTerm) => {
-            this.handleSearchChange(searchTerm);
+        this.view.setSearchSubmitCallback((searchTerm) => {
+            this.handleSearchSubmit(searchTerm);
         });
 
-        // Callback para mudanças de categoria
         this.view.setCategoryChangeCallback((category) => {
             this.handleCategoryChange(category);
         });
 
-        // Callback para navegação para a página anterior
         this.view.setPrevPageCallback(() => {
             this.handlePrevPage();
         });
 
-        // Callback para navegação para a próxima página
         this.view.setNextPageCallback(() => {
             this.handleNextPage();
         });
 
-        // Callback para cliques em imagens
         this.view.setImageClickCallback((imageId) => {
             this.handleImageClick(imageId);
         });
     }
 
-    // Lida com cliques em imagens, exibindo o modal
+    // Exibe o modal ao clicar na imagem
     handleImageClick(imageId) {
         const image = this.model.getAllImages().find(img => img.id === imageId);
         if (image) {
@@ -43,15 +38,14 @@ class ImageController {
         }
     }
 
-    // Inicializa a galeria com todas as imagens
-    initializeGallery() {
+    // Lida com a submissão do formulário de busca
+    handleSearchSubmit(searchTerm) {
+        this.model.setSearch(searchTerm);
         this.updateGallery();
-        
     }
 
-    // Lida com mudanças no termo de busca
-    handleSearchChange(searchTerm) {
-        this.model.setSearch(searchTerm);
+    // Inicializa a galeria com todas as imagens
+    initializeGallery() {
         this.updateGallery();
     }
 
@@ -75,24 +69,19 @@ class ImageController {
         }
     }
 
-    // Atualiza a galeria com base no estado atual do modelo
+    // Atualiza a galeria com base no estado atual
     updateGallery() {
-        // this.view.showLoading(); // Removido o indicador de carregamento
-
         setTimeout(() => {
-            // Obtém dados do modelo
             const images = this.model.getCurrentPageImages();
             const paginationInfo = this.model.getPaginationInfo();
             const stats = this.model.getStats();
 
-            // Atualiza a visualização
             this.view.renderGallery(images);
             this.view.updatePagination(paginationInfo);
             this.view.updateCategoryButtons(this.model.currentCategory);
             this.view.updateSearchInput(this.model.currentSearch);
             this.view.showStats(stats);
 
-            // Aplica animações aos cartões de imagem
             this.animateImageCards();
         }, 300);
     }

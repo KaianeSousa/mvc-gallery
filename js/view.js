@@ -1,5 +1,6 @@
 class ImageView {
     constructor() {
+        // Seleciona os elementos do DOM para interações
         this.galleryContainer = document.getElementById('gallery');
         this.searchInput = document.getElementById('searchInput');
         this.categoryButtons = document.querySelectorAll('.category-btn');
@@ -8,23 +9,25 @@ class ImageView {
         this.pageInfo = document.getElementById('pageInfo');
         this.modal = document.getElementById('imageModal');
         this.modalImage = document.getElementById('modalImage');
+        this.modalTitle = document.getElementById('modalTitle');
         this.keywordsContainer = document.getElementById('keywordsContainer');
         this.closeBtn = document.querySelector('.close-btn');
         this.searchBtn = document.getElementById('searchBtn');
 
-        // Configura os event listeners para interações
+        // Configura os eventos listeners para interações do usuário
         this.setupEventListeners();
+        // Configura os eventos para o modal
         this.setupModalEvents();
     }
 
-    // Configura os eventos do modal
+    // Configura os eventos do modal 
     setupModalEvents() {
-        // Fecha o modal ao clicar no botão de fechar (X)
+        // Fecha o modal ao clicar no botão de fechar
         this.closeBtn.addEventListener('click', () => {
             this.hideModal();
         });
 
-        // Fecha o modal ao clicar fora do conteúdo do modal
+        // Fecha o modal ao clicar fora de seu conteúdo
         this.modal.addEventListener('click', (e) => {
             if (e.target === this.modal) {
                 this.hideModal();
@@ -38,12 +41,21 @@ class ImageView {
         });
     }
 
-    // Configura os event listeners para busca, categorias e paginação
+    // Configura os eventos para busca, categorias e paginação
     setupEventListeners() {
-        // Dispara a busca ao clicar no botão de busca
+        // Configura o clique no botão de busca
         this.searchBtn.addEventListener('click', () => {
-            if (this.onSearchChange) {
-                this.onSearchChange(this.searchInput.value);
+            if (this.onSearchSubmit) {
+                this.onSearchSubmit(this.searchInput.value);
+            }
+        });
+
+        // Configura a busca ao pressionar 'Enter' no campo de input
+        this.searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (this.onSearchSubmit) {
+                    this.onSearchSubmit(this.searchInput.value);
+                }
             }
         });
 
@@ -72,7 +84,7 @@ class ImageView {
         });
     }
 
-    // Renderiza a galeria com uma animação de fade
+    // Exibe a galeria com uma animação de fade
     renderGallery(plants) {
         this.galleryContainer.classList.add('fade-out');
 
@@ -92,7 +104,7 @@ class ImageView {
         }, 150);
     }
 
-    // Renderiza as imagens de plantas na galeria
+    // Exibe as imagens de plantas na galeria
     renderPlants(plants) {
         this.galleryContainer.innerHTML = plants
             .map(plant => `
@@ -130,7 +142,7 @@ class ImageView {
         });
     }
 
-    // Atualiza as informações de paginação e estado dos botões
+    // Atualiza as informações de paginação e estado de seus botões
     updatePagination(paginationInfo) {
         this.pageInfo.textContent = `Página ${paginationInfo.currentPage} de ${paginationInfo.totalPages}`;
         this.prevBtn.disabled = !paginationInfo.hasPrevPage;
@@ -142,19 +154,14 @@ class ImageView {
         this.searchInput.value = searchTerm;
     }
 
-    // Exibe estatísticas da galeria no console
-    showStats(stats) {
-        console.log('Estatísticas da galeria de flora:', stats);
-    }
-
     // Capitaliza a primeira letra de uma string
     capitalizeFirst(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    // Define o callback para mudanças no campo de busca
-    setSearchChangeCallback(callback) {
-        this.onSearchChange = callback;
+    // Define o callback para submissão de busca
+    setSearchSubmitCallback(callback) {
+        this.onSearchSubmit = callback;
     }
 
     // Define o callback para mudanças de categoria
@@ -176,23 +183,6 @@ class ImageView {
     animateImageCard(card, delay = 0) {
         card.style.animationDelay = `${delay}ms`;
         card.style.animation = 'fadeInUp 0.6s ease forwards';
-    }
-
-    // Exibe um indicador de carregamento (removido)
-    /*
-    showLoading() {
-        this.galleryContainer.innerHTML = `
-            <div class="loading" style="text-align: center; padding: 2rem;">
-                <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #4a7c59; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                <p style="margin-top: 1rem; color: #6c757d;">Carregando plantas...</p>
-            </div>
-        `;
-    }
-    */
-
-    // Remove o indicador de carregamento (sem ação, pois renderGallery sobrescreve o container)
-    hideLoading() {
-        // Sem ação necessária, pois renderGallery sobrescreve o conteúdo do container
     }
 
     // Define o callback para cliques em imagens
@@ -217,13 +207,14 @@ class ImageView {
     showModal(image) {
         this.modalImage.src = image.url;
         this.modalImage.alt = image.title;
+        this.modalTitle.textContent = image.title;
 
-        // Renderiza as palavras-chave no modal
+        // Exibi as palavras-chave no modal
         this.keywordsContainer.innerHTML = image.keywords
             .map(keyword => `<span>${keyword}</span>`)
             .join('');
 
-        // Exibe o modal com animação
+        // Exibe o modal 
         this.modal.classList.add('show');
         document.body.style.overflow = 'hidden';
 
@@ -232,12 +223,12 @@ class ImageView {
         }, 100);
     }
 
-    // Esconde o modal com animação
+    // Esconde o modal 
     hideModal() {
         this.modal.classList.remove('show');
         document.body.style.overflow = '';
 
-        // Limpa o conteúdo do modal após a animação
+        // Limpa o conteúdo do modal 
         setTimeout(() => {
             this.modalImage.src = '';
             this.modalImage.alt = '';
