@@ -178,16 +178,15 @@ class ImageModel {
             }
         ];
 
-        // Configurações padrão
         this.currentCategory = 'todas';
         this.currentSearch = '';
         this.currentPage = 1;
         this.imagesPerPage = 8;
-        this.updateImagesPerPage(); // Adicionando a chamada no construtor
-        window.addEventListener('resize', () => this.updateImagesPerPage()); // Adicionando o listener
+        this.updateImagesPerPage(); 
+        window.addEventListener('resize', () => this.updateImagesPerPage()); 
     }
 
-    // Calcula dinamicamente o número de cards por página com base na largura da tela
+    // Calcula o número de cards por página com base na largura da tela
     updateImagesPerPage() {
         const width = window.innerWidth;
         if (width >= 1200) {
@@ -206,7 +205,7 @@ class ImageModel {
         return this.images;
     }
 
-    // Normaliza texto para busca (remove acentos e converte para minúsculas)
+    // Normaliza texto para busca 
     normalizeText(text) {
         return text
             ? text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase()
@@ -216,7 +215,7 @@ class ImageModel {
     getFilteredImages() {
         let filtered = this.images;
 
-        // Filtra por categoria, se não for 'todas'
+        // Filtra por categoria'
         if (this.currentCategory !== 'todas') {
             filtered = filtered.filter(image => {
                 if (Array.isArray(image.category)) {
@@ -226,7 +225,7 @@ class ImageModel {
             });
         }
 
-        // Filtra por termo de busca, se houver
+        // Filtra por termo de busca
         if (this.currentSearch.trim() !== '') {
             const searchTerm = this.normalizeText(this.currentSearch);
             filtered = filtered.filter(image => {
@@ -248,7 +247,7 @@ class ImageModel {
         const filtered = this.getFilteredImages();
         const totalPages = Math.max(1, Math.ceil(filtered.length / this.imagesPerPage));
 
-        // Garante que a página atual não exceda o total de páginas
+        // Impede que a página atual exceda o total disponível
         if (this.currentPage > totalPages) {
             this.currentPage = totalPages;
         }
@@ -272,13 +271,13 @@ class ImageModel {
         };
     }
 
-    // Define a categoria atual e reseta a página para 1
+    // Define a categoria atual e reseta a página para a primiera
     setCategory(category) {
         this.currentCategory = category;
         this.currentPage = 1;
     }
 
-    // Define o termo de busca e reseta a página para 1
+    // Define o termo de busca e reseta a página para a primiera
     setSearch(search) {
         this.currentSearch = search;
         this.currentPage = 1;
@@ -294,7 +293,7 @@ class ImageModel {
         return false;
     }
 
-    // Retrocede para a página anterior, se disponível
+    // Retrocede para a página anterior
     prevPage() {
         const paginationInfo = this.getPaginationInfo();
         if (paginationInfo.hasPrevPage) {
@@ -304,7 +303,7 @@ class ImageModel {
         return false;
     }
 
-    // Retorna estatísticas da galeria
+    // Retorna os dados da galeria
     getStats() {
         const filtered = this.getFilteredImages();
         return {
