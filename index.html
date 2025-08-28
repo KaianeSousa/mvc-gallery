@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Flora - MVC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🌿 Galeria de Flora</h1>
+            <p>Explore a beleza e diversidade do mundo vegetal</p>
+        </header>
+
+<div class="search-section">
+    <div class="search-wrapper">
+        <i class="fas fa-magnifying-glass search-icon"></i>
+        <input type="text" class="search-input" placeholder="Buscar por planta, flor, árvore..." id="searchInput">
+        <button class="search-btn" id="searchBtn" aria-label="Buscar">
+            <span class="search">Buscar</span>
+        </button>
+    </div>
+</div>
+
+            
+            <div class="categories" id="categories">
+                <button class="category-btn active" data-category="todas">🌱 Todas</button>
+                <button class="category-btn" data-category="flores">🌸 Flores</button>
+                <button class="category-btn" data-category="árvores">🌳 Árvores</button>
+                <button class="category-btn" data-category="suculentas">🌵 Suculentas</button>
+                <button class="category-btn" data-category="ervas">🌿 Ervas</button>
+                <button class="category-btn" data-category="frutiferas">🍊Frutíferas</button>
+            </div>
+        </div>
+
+        <div class="gallery-container">
+            <div class="gallery" id="gallery">
+                <!-- Imagens serão inseridas aqui dinamicamente -->
+            </div>
+
+            <div class="pagination" id="pagination">
+                <button class="pagination-btn" id="prevBtn">← Anterior</button>
+                <span class="page-info" id="pageInfo">Página 1 de 1</span>
+                <button class="pagination-btn" id="nextBtn">Próxima →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Exibir Imagem -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close-btn" aria-label="Fechar">&times;</button>
+            </div>
+            <img id="modalImage" src="" alt="Imagem Selecionada">
+            <div class="keywords-container" id="keywordsContainer"></div>
+        </div>
+    </div>
+
+    <script src="js/model.js"></script>
+    <script src="js/view.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
